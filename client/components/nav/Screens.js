@@ -21,7 +21,7 @@ const Screens = () => {
   const authenticated = state?.token !== null
 
   return (
-    <Stack.Navigator initialRouteName='SignIn' screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName='Search' screenOptions={{ headerShown: false }}>
       {authenticated ? (
         <>
           <Stack.Screen name='Home' component={Home} options={{ title: 'Home', headerRight: () => <Header /> }} />

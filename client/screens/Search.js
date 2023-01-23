@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import {
   TouchableWithoutFeedback,
   TouchableOpacity,
@@ -10,10 +10,13 @@ import {
   FlatList,
 } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
+import { ProductContext } from '../context/product'
 
 const Search = ({ navigation }) => {
+  const { products, setProducts } = useContext(ProductContext)
   const [dataArr, setDataArr] = useState([])
   const [data, setData] = useState([])
+  const [copyProducts, setCopyProducts] = useState(products)
 
   const createArr = () => {
     let dataArr1 = []
@@ -41,6 +44,7 @@ const Search = ({ navigation }) => {
     setDataArr(filteredArr)
   }
 
+  console.log('copy', copyProducts)
   return (
     <SafeAreaView>
       <View className='flex-row py-2'>
