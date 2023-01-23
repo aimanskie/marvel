@@ -10,6 +10,7 @@ const Header = () => {
   const handleSignOut = async () => {
     setState({ token: null })
     await AsyncStorage.removeItem('@auth')
+    await AsyncStorage.removeItem('cart')
   }
 
   return (

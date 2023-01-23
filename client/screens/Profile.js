@@ -1,17 +1,23 @@
 import { useState, useEffect, useContext } from 'react'
 import { Text, View, SafeAreaView } from 'react-native'
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 import FooterTabs from '../components/nav/FooterTabs'
 import { AuthContext } from '../context/auth'
 // import axios from 'axios'
 
 const Profile = ({ navigation }) => {
-  const { state } = useContext(AuthContext)
+  const { state, setState } = useContext(AuthContext)
   //   useEffect(() => {
   // if(state) {
 
   // }
   //   },[])
   const { userName, name, phone, email, eWalletBalance } = state
+
+  const handleSignOut = async () => {
+    setState({ token: null })
+    await AsyncStorage.removeItem('@auth')
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -25,13 +31,14 @@ const Profile = ({ navigation }) => {
       </View>
       {state && (
         <>
-          <Text >userName : {userName}</Text>
-          <Text >name : {name}</Text>
-          <Text >phone : {phone}</Text>
-          <Text >email : {email}</Text>
-          <Text >eWallet : RM {eWalletBalance}</Text>
+          <Text>userName : {userName}</Text>
+          <Text>name : {name}</Text>
+          <Text>phone : {phone}</Text>
+          <Text>email : {email}</Text>
+          <Text>eWallet : RM {eWalletBalance}</Text>
         </>
       )}
+      <FontAwesome5Icon name='sign-out-alt' color='#ff9900' onPress={handleSignOut} />
       <View style={{ flex: 1, justifyContent: 'flex-end' }}>
         <FooterTabs />
       </View>

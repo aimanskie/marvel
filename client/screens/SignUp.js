@@ -37,14 +37,14 @@ const SignUp = ({ navigation }) => {
   }
 
   return (
-    <>
-      <KeyboardAwareScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-        <View style={{ marginVertical: 100 }}>
-          <Text>Signup</Text>
-          <Text>Create you kofo account</Text>
+    <KeyboardAwareScrollView className='px-4 pt-24'>
+      <View>
+        <Text className='text-blue-800 text-2xl pb-1'>Signup</Text>
+        <Text className='pb-2 text-gray-600'>Create you kofo account</Text>
+        <View className='pt-4'>
           <UserInput
-            name='Username'
-            value={values.Username}
+            placeholder='Username'
+            value={values.userName}
             setValues={setValues}
             values={values}
             autoCapitalize='words'
@@ -52,8 +52,8 @@ const SignUp = ({ navigation }) => {
             a='userName'
           />
           <UserInput
-            name='Email'
-            value={values.Email}
+            placeholder='Email'
+            value={values.email}
             setValues={setValues}
             values={values}
             a='email'
@@ -61,37 +61,26 @@ const SignUp = ({ navigation }) => {
             keyboardType='email-address'
           />
           <UserInput
-            name='Password'
-            value={values.Password}
+            placeholder='Password'
+            value={values.password}
             setValues={setValues}
             values={values}
             a='password'
             secureTextEntry={true}
             autoComplteType='password'
           />
-          <SubmitBtn title='Create Account' handleSubmit={handleSubmit} loading={loading} />
-          <Divider />
-          <View
-            style={{
-              marginTop: 10,
-              borderWidth: '1px',
-              borderStyle: 'solid',
-              borderColor: 'black',
-              height: 50,
-              marginBottom: 20,
-              justifyContent: 'center',
-              marginHorizontol: 15,
-              borderRadius: 10,
-            }}
-          >
-            <Text>Create Account with Google</Text>
-          </View>
-          <Text>
-            Already join? <Text onPress={() => navigation.navigate('SignIn')}>Sign In</Text>
-          </Text>
         </View>
-      </KeyboardAwareScrollView>
-    </>
+        <SubmitBtn title='Create Account' handleSubmit={handleSubmit} />
+        <Divider />
+        <SubmitBtn title='Create Account with Google' google={true} />
+        <Text className='text-center'>
+          Already join?{' '}
+          <Text onPress={() => navigation.navigate('SignIn')} className='text-blue-800'>
+            Sign In
+          </Text>
+        </Text>
+      </View>
+    </KeyboardAwareScrollView>
   )
 }
 

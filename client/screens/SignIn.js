@@ -1,6 +1,6 @@
-import { View, Alert, Text } from 'react-native'
+import { View, Alert, Text, Image } from 'react-native'
 import UserInput from '../components/auth/UserInput'
-import { useLayoutEffect, useState, useContext } from 'react'
+import { useState, useContext } from 'react'
 import SubmitBtn from '../components/auth/SubmitBtn'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import axios from 'axios'
@@ -8,21 +8,18 @@ import Divider from '../components/Divider'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 const { alert } = Alert
 import { AuthContext } from '../context/auth.js'
-import { SparklesIcon, XMarkIcon } from 'react-native-heroicons/solid'
+import { XMarkIcon } from 'react-native-heroicons/solid'
+import { SafeAreaView } from 'react-native'
+import Checkbox from 'expo-checkbox'
 
 const SignIn = ({ navigation }) => {
-  const [userName, setUserName] = useState('aimanskie')
-  const [password, setPassword] = useState('aimanskie')
+  const [values, setValues] = useState({ userName: 'aimanskie', password: 'aimanskie' })
   const [loading, setLoading] = useState(false)
   const { state, setState } = useContext(AuthContext)
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-    })
-  }, [])
+  const [isChecked, setIsChecked] = useState(false)
 
   const handleSubmit = async () => {
+    const { userName, password } = values
     setLoading(true)
     if (!userName || !password) {
       alert('All fields are required')
@@ -45,51 +42,59 @@ const SignIn = ({ navigation }) => {
   }
 
   return (
-    <>
-      <KeyboardAwareScrollView>
-        <View className='relative'>
-          <XMarkIcon />
-          <Text className='text-red-500 text-2xl'>Let's get your started!'</Text>
-          <Text>Continue to your kofo account</Text>
+    <KeyboardAwareScrollView className='px-4'>
+      <SafeAreaView>
+        <View className='pt-5'>
+          <XMarkIcon onPress={() => navigation.navigate('SignUp')} />
+        </View>
+        <View className='pt-10 '>
+          <Text className='text-blue-800 text-2xl pb-1'>Let's get your started!</Text>
+          <Text className='pb-2 text-gray-600'>Continue to your kofo account</Text>
           <UserInput
-            name='Username'
-            value={userName}
-            setValue={setUserName}
-            autoCapitalize='words'
+            placeholder='Username'
+            value={values.userName}
+            setValues={setValues}
+            values={values}
+            a='userName'
             autoCorrect={false}
           />
           <UserInput
-            name='Password'
-            value={password}
-            setValue={setPassword}
+            placeholder='Password'
+            value={values.password}
+            setValues={setValues}
+            values={values}
+            a='password'
             secureTextEntry={true}
-            autoComplteType='password'
+            password={true}
           />
-          <SubmitBtn title='Continue' handleSubmit={handleSubmit} loading={loading} />
-          <Text>Remember me</Text>
-          <Text onPress={() => navigation.navigate('ResetPassword')}>Forgot password?</Text>
-          <Divider />
-          <View
-            style={{
-              marginTop: 10,
-              borderWidth: '1px',
-              borderStyle: 'solid',
-              borderColor: 'black',
-              height: 50,
-              marginBottom: 20,
-              justifyContent: 'center',
-              marginHorizontol: 15,
-              borderRadius: 10,
-            }}
-          >
-            <Text>Continue with Google</Text>
+          <View className='flex-row space-x-28'>
+            <View className='flex-row'>
+              <Checkbox
+                className='h-4 w-4'
+                value={isChecked}
+                onValueChange={setIsChecked}
+                color={isChecked ? 'blue' : undefined}
+              />
+              <Text className='pl-1'>Remember me</Text>
+            </View>
+            <Text className='text-blue-800' onPress={() => navigation.navigate('ResetPassword')}>
+              Forgot password?
+            </Text>
           </View>
-          <Text>
-            Don't have an account? <Text onPress={() => navigation.navigate('SignUp')}>Sign Up</Text>
+          <SubmitBtn title='Continue' handleSubmit={handleSubmit} />
+          <Divider />
+          <View>
+            <SubmitBtn title='Continue with Google' google={true} />
+          </View>
+          <Text className='text-center'>
+            Don't have an account?
+            <Text onPress={() => navigation.navigate('SignUp')} className='text-blue-800'>
+              Sign Up
+            </Text>
           </Text>
         </View>
-      </KeyboardAwareScrollView>
-    </>
+      </SafeAreaView>
+    </KeyboardAwareScrollView>
   )
 }
 

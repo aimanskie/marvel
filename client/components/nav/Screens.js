@@ -12,14 +12,16 @@ import Orders from '../../screens/Orders'
 import EditProfile from '../../screens/EditProfile'
 import Checkout from '../../screens/Checkout'
 import PlaceOrder from '../../screens/PlaceOrder'
+import Search from '../../screens/Search'
+import ShopDetails from '../../screens/ShopDetails.js'
 const Stack = createNativeStackNavigator()
 
 const Screens = () => {
   const { state } = useContext(AuthContext)
   const authenticated = state?.token !== null
-  console.log(authenticated)
+
   return (
-    <Stack.Navigator initialRouteName='SignIn' /* screenOptions={{ headerShown: false }} */>
+    <Stack.Navigator initialRouteName='SignIn' screenOptions={{ headerShown: false }}>
       {authenticated ? (
         <>
           <Stack.Screen name='Home' component={Home} options={{ title: 'Home', headerRight: () => <Header /> }} />
@@ -29,6 +31,12 @@ const Screens = () => {
           <Stack.Screen name='EditProfile' component={EditProfile} options={{ headerBackTitle: 'Back' }} />
           <Stack.Screen name='Checkout' component={Checkout} options={{ headerBackTitle: 'Back' }} />
           <Stack.Screen name='PlaceOrder' component={PlaceOrder} options={{ headerBackTitle: 'Back' }} />
+          <Stack.Screen name='Search' component={Search} />
+          <Stack.Screen
+            name='ShopDetails'
+            component={ShopDetails}
+            options={{ headerShown: true, headerBackTitle: 'Back' }}
+          />
         </>
       ) : (
         <>

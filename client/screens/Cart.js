@@ -22,7 +22,6 @@ const Cart = ({ navigation }) => {
         {total ? <Text>total : RM {total}</Text> : <Text>No Products</Text>}
       </Text>
       <Text onPress={handleClear}>Clear Cart</Text>
-      {/* <Text>total price : RM {totalPrice}</Text> */}
       <Text onPress={() => navigation.navigate('Checkout')}>Select Shipping and Payment</Text>
 
       <View style={{ flex: 1, justifyContent: 'flex-end' }}>

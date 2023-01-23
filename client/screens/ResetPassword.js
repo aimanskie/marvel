@@ -1,10 +1,12 @@
-import { Text, View, Alert } from 'react-native'
+import { Text, View, Alert, SafeAreaView } from 'react-native'
 import UserInput from '../components/auth/UserInput'
-import { useState } from 'react'
+import { useState, useLayoutEffect } from 'react'
 import SubmitBtn from '../components/auth/SubmitBtn'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import axios from 'axios'
 const { alert } = Alert
+import { XMarkIcon } from 'react-native-heroicons/solid'
+
 const ResetPassword = ({ navigation }) => {
   const [values, setValues] = useState({ userName: '', email: '', password: '' })
   const [loading, setLoading] = useState(false)
@@ -46,15 +48,18 @@ const ResetPassword = ({ navigation }) => {
   }
 
   return (
-    <>
-      <KeyboardAwareScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-        <View style={{ marginVertical: 100 }}>
-          <Text>Reset password</Text>
-          <Text>Enter your username and email to reset password</Text>
+    <KeyboardAwareScrollView className='px-4'>
+      <SafeAreaView>
+        <View className='pt-5'>
+          <XMarkIcon onPress={() => navigation.navigate('SignIn')} />
+        </View>
+        <View className='pt-28'>
+          <Text className='text-blue-800 text-2xl pb-1'>Reset password</Text>
+          <Text className='pb-2 text-gray-600'>Enter your username and email to reset password</Text>
           {!resetCheck ? (
-            <>
+            <View className='pt-3'>
               <UserInput
-                name='Username'
+                placeholder='Username'
                 value={values.userName}
                 setValues={setValues}
                 values={values}
@@ -62,7 +67,7 @@ const ResetPassword = ({ navigation }) => {
                 autoCorrect={false}
               />
               <UserInput
-                name='Email'
+                placeholder='Email'
                 value={values.email}
                 setValues={setValues}
                 values={values}
@@ -70,7 +75,7 @@ const ResetPassword = ({ navigation }) => {
                 autoCompleteType='email'
                 keyboardType='email-address'
               />
-            </>
+            </View>
           ) : (
             <UserInput
               name='Password'
@@ -83,10 +88,9 @@ const ResetPassword = ({ navigation }) => {
             />
           )}
           <SubmitBtn title='Continue' handleSubmit={handleSubmit} loading={loading} />
-          <Text onPress={() => navigation.navigate('SignIn')}>Back</Text>
         </View>
-      </KeyboardAwareScrollView>
-    </>
+      </SafeAreaView>
+    </KeyboardAwareScrollView>
   )
 }
 
