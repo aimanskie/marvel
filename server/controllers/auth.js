@@ -107,9 +107,17 @@ export const resetPassword = async (req, res) => {
 
 export const userUpdate = async (req, res) => {
   try {
-    const { userName, name, phone, email } = req.body
-    const data = await User.findOneAndUpdate({ _id: req.user._id }, { userName, name, phone, email }, { new: true })
-    // console.log(data)
+    const { userName, name, phone, email, address, _id } = req.body
+    const data = await User.findOneAndUpdate({ _id }, { userName, name, phone, email, address }, { new: true })
+    return res.json(data)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const getUser = async (req, res) => {
+  try {
+    const data = await User.findById(req.query.id)
     return res.json(data)
   } catch (error) {
     console.log(error)

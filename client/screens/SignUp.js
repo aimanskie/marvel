@@ -1,25 +1,23 @@
 import { Text, View, Alert } from 'react-native'
 import UserInput from '../components/auth/UserInput'
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import SubmitBtn from '../components/auth/SubmitBtn'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import axios from 'axios'
 import Divider from '../components/Divider'
-import { AuthContext } from '../context/auth'
+import { useAuthContext } from '../context/auth'
 const { alert } = Alert
 
 const SignUp = ({ navigation }) => {
   const [values, setValues] = useState({ userName: 'aimanskie', email: 'aimanskie@gmail.com', password: 'aimanskie' })
 
-  const [loading, setLoading] = useState(false)
-  const { setState } = useContext(AuthContext)
+  const { storeAuthToLocal, setState } = useAuthContext()
 
   const handleSubmit = async () => {
     const { userName, email, password } = values
-    setLoading(true)
+    console.log(userName, email, password)
     if (!userName || !email || !password) {
       alert('All fields are required')
-      setLoading(false)
       return
     }
     try {
@@ -28,10 +26,11 @@ const SignUp = ({ navigation }) => {
         email,
         password,
       })
+      storeAuthToLocal(data)
       alert('Signup Success')
-      setState(data)
       navigation.navigate('Home')
     } catch (err) {
+      console.log(err)
       alert(err.response.data)
     }
   }

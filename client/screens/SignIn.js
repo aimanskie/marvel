@@ -1,29 +1,25 @@
-import { View, Alert, Text, Image } from 'react-native'
+import { View, Alert, Text } from 'react-native'
 import UserInput from '../components/auth/UserInput'
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import SubmitBtn from '../components/auth/SubmitBtn'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import axios from 'axios'
 import Divider from '../components/Divider'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 const { alert } = Alert
-import { AuthContext } from '../context/auth.js'
+import { useAuthContext } from '../context/auth.js'
 import { XMarkIcon } from 'react-native-heroicons/solid'
 import { SafeAreaView } from 'react-native'
 import Checkbox from 'expo-checkbox'
 
 const SignIn = ({ navigation }) => {
   const [values, setValues] = useState({ userName: 'aimanskie', password: 'aimanskie' })
-  const [loading, setLoading] = useState(false)
-  const { state, setState } = useContext(AuthContext)
+  const { setState, storeAuthToLocal } = useAuthContext()
   const [isChecked, setIsChecked] = useState(false)
 
   const handleSubmit = async () => {
     const { userName, password } = values
-    setLoading(true)
     if (!userName || !password) {
       alert('All fields are required')
-      setLoading(false)
       return
     }
     try {
@@ -31,13 +27,12 @@ const SignIn = ({ navigation }) => {
         userName,
         password,
       })
-      await AsyncStorage.setItem('@auth', JSON.stringify(data))
-      setState(data)
-      setLoading(false)
+      storeAuthToLocal(data)
       alert('Sign in Success')
       navigation.navigate('Home')
     } catch (err) {
       console.log(err)
+      alert(err.response.data)
     }
   }
 
@@ -47,7 +42,7 @@ const SignIn = ({ navigation }) => {
         <View className='pt-5'>
           <XMarkIcon onPress={() => navigation.navigate('SignUp')} />
         </View>
-        <View className='pt-10 '>
+        <View className='pt-32 '>
           <Text className='text-blue-800 text-2xl pb-1'>Let's get your started!</Text>
           <Text className='pb-2 text-gray-600'>Continue to your kofo account</Text>
           <UserInput

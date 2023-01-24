@@ -1,23 +1,23 @@
-import { useState, useContext, useEffect } from 'react'
-import { Text, View, Alert } from 'react-native'
-import { AuthContext } from '../context/auth'
+import { useState } from 'react'
+import { Text, View, Alert, TextInput } from 'react-native'
+import { useAuthContext } from '../context/auth'
 import axios from 'axios'
-import UserInput from '../components/auth/UserInput'
 import SubmitBtn from '../components/auth/SubmitBtn'
+import { useNavigation } from '@react-navigation/native'
+
+const { alert } = Alert
 
 const EditProfile = () => {
-  const { state, setState } = useContext(AuthContext)
+  const { state, setState } = useAuthContext()
   const [values, setValues] = useState(state)
-  const [loading, setLoading] = useState(false)
-  const { alert } = Alert
+  const navigation = useNavigation()
 
-  const handleChange = async () => {
-    setLoading(true)
-    const { userName, name, phone, email, token } = values
+  const handleSubmit = async () => {
+    const { userName, name, phone, email, address, token, _id } = values
     try {
       const { data } = await axios.put(
         '/update-user',
-        { userName, name, phone, email },
+        { userName, name, phone, email, address, _id },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -25,25 +25,50 @@ const EditProfile = () => {
         }
       )
       alert('User Updated')
+      navigation.goBack()
       setState(data)
-      setLoading(false)
     } catch (error) {
       console.log(error)
     }
   }
 
   return (
-    <View>
-      <Text>Edit Profile Here</Text>
-      <Text>Username</Text>
-      <UserInput name='Username' value={values.userName} setValues={setValues} values={values} key='userName' />
-      <Text>Name</Text>
-      <UserInput name='Name' value={values.name} setValues={setValues} values={values} a='name' />
-      <Text>Phone</Text>
-      <UserInput name='Phone' value={values.phone} setValues={setValues} values={values} a='phone' />
-      <Text>Email</Text>
-      <UserInput name='Email' value={values.email} setValues={setValues} values={values} a='email' />
-      <SubmitBtn title='Update' handleSubmit={handleChange} loading={loading} />
+    <View className='flex-1'>
+      <View className='bg-white px-4 py-4 my-2'>
+        <Text className='text-gray-500'>Username</Text>
+        <TextInput
+          onChangeText={(text) => setValues((prev) => ({ ...prev, userName: text }))}
+          value={values.userName}
+          className='border border-gray-300 py-3 pl-3 mt-2'
+        />
+        <Text className='text-gray-500 pt-2'>Email</Text>
+        <TextInput
+          onChangeText={(text) => setValues((prev) => ({ ...prev, email: text }))}
+          value={values.email}
+          className='border border-gray-300 py-3 pl-3 mt-2'
+        />
+        <Text className='text-gray-500 pt-2'>Name</Text>
+        <TextInput
+          onChangeText={(text) => setValues((prev) => ({ ...prev, name: text }))}
+          value={values.name}
+          className='border border-gray-300 py-3 pl-3 mt-2'
+        />
+        <Text className='text-gray-500 pt-2'>Phone</Text>
+        <TextInput
+          onChangeText={(text) => setValues((prev) => ({ ...prev, phone: text }))}
+          value={values.phone}
+          className='border border-gray-300 py-3 pl-3 mt-2'
+        />
+        <Text className='text-gray-500 pt-2'>Address</Text>
+        <TextInput
+          onChangeText={(text) => setValues((prev) => ({ ...prev, address: text }))}
+          value={values.address}
+          className='border border-gray-300 py-3 pl-3 mt-2'
+        />
+      </View>
+      <View className='flex-1 justify-end '>
+        <SubmitBtn title='Save' handleSubmit={handleSubmit} />
+      </View>
     </View>
   )
 }

@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import {
   TouchableWithoutFeedback,
   TouchableOpacity,
@@ -10,43 +10,39 @@ import {
   FlatList,
 } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
-import { ProductContext } from '../context/product'
 
 const Search = ({ navigation }) => {
-  const { products, setProducts } = useContext(ProductContext)
-  const [dataArr, setDataArr] = useState([])
-  const [data, setData] = useState([])
-  const [copyProducts, setCopyProducts] = useState(products)
+  const [shops, setShops] = useState([])
+
+  // first thing
+  useEffect(() => {
+    setShops(createArr)
+  }, [])
 
   const createArr = () => {
-    let dataArr1 = []
+    let dataShop = []
     for (let index = 1; index < 30; index++) {
-      dataArr1.push({
+      dataShop.push({
         id: index,
         shopTitle: 'Shop name dolor sit amet consectetor',
         description: 'Shop description : Lorem ipsum dolor sit emet',
       })
     }
-    setDataArr(dataArr1)
-    setData(dataArr1)
+    return dataShop
   }
-  useEffect(() => {
-    createArr()
-  }, [])
 
-  const handlePress = (item) => {
+  const handleOneShop = (item) => {
     navigation.navigate('ShopDetails', { item })
   }
 
   const handleSearch = (text) => {
-    if (text === '') return setDataArr(data)
-    const filteredArr = data.filter((data) => data.id === Number(text))
-    setDataArr(filteredArr)
+    if (text === '') return setShops(createArr)
+    const filteredShop = createArr().filter((shop) => shop.id === Number(text))
+    setShops(filteredShop)
   }
 
-  console.log('copy', copyProducts)
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <View className='flex-row py-2'>
         <Entypo name='shop' size={24} color='black' style={{ paddingTop: 10 }} onPress={() => navigation.goBack()} />
         <Text className='text-2xl pl-2 pt-1 mr-2' onPress={() => navigation.goBack()}>
@@ -61,29 +57,27 @@ const Search = ({ navigation }) => {
         </View>
       </View>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View>
-          <FlatList
-            data={dataArr}
-            numColumns={2}
-            columnWrapperStyle={{
-              justifyContent: 'space-between',
-            }}
-            renderItem={({ item }) => {
-              const { shopTitle, description, id } = item
-              return (
-                <TouchableOpacity
-                  onPress={() => handlePress(item)}
-                  className='border border-gray-400 rounded-lg bg-gray-200 p-2 w-1/2 gap-1 my-0.5'
-                >
-                  <Text className='mb-2 text-2xl'>{shopTitle}</Text>
-                  <Text>{description}</Text>
-                  <Text>id - {id}</Text>
-                </TouchableOpacity>
-              )
-            }}
-            keyExtractor={(item) => item.id}
-          />
-        </View>
+        <FlatList
+          data={shops}
+          numColumns={2}
+          columnWrapperStyle={{
+            justifyContent: 'space-between',
+          }}
+          renderItem={({ item }) => {
+            const { shopTitle, description, id } = item
+            return (
+              <TouchableOpacity
+                onPress={() => handleOneShop(item)}
+                className='border border-gray-400 rounded-lg bg-gray-200 p-2 w-1/2 gap-1 my-0.5'
+              >
+                <Text className='mb-2 text-2xl'>{shopTitle}</Text>
+                <Text>{description}</Text>
+                <Text>id - {id}</Text>
+              </TouchableOpacity>
+            )
+          }}
+          keyExtractor={(item) => item.id}
+        />
       </TouchableWithoutFeedback>
     </SafeAreaView>
   )

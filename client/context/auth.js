@@ -1,17 +1,14 @@
-import { useState, useEffect, createContext } from 'react'
+import { useState, useEffect, createContext, useContext } from 'react'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { API } from '../config'
-import { G } from 'react-native-svg'
 
 const AuthContext = createContext()
 
-const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const [state, setState] = useState({
     token: null,
   })
-  const [cartState, setCartState] = useState([])
-  const [cart, setCart] = useState([])
 
   axios.defaults.baseURL = API
 
@@ -26,15 +23,42 @@ const AuthProvider = ({ children }) => {
     loadFromAsyncStorage()
   }, [])
 
+  const getUser = async () => {
+    let data = await AsyncStorage.getItem('@auth')
+    const user = JSON.parse(data)
+    setState(user)
+  }
+
+  const storeAuthToLocal = async (data) => {
+    await AsyncStorage.setItem('@auth', JSON.stringify(data))
+    setState(data)
+    return
+  }
+
+  const signOut = async () => {
+    setState({ token: null })
+    await AsyncStorage.removeItem('@auth')
+    await AsyncStorage.removeItem('cart')
+    return
+  }
+
+  const getUserDB = async () => {
+    const { data } = await axios(`/get-user?id=${state._id}`)
+    setState(data)
+    return
+  }
+
   const value = {
-    cart,
-    setCart,
     state,
     setState,
-    cartState,
-    setCartState,
+    getUser,
+    storeAuthToLocal,
+    signOut,
+    getUserDB,
   }
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
-export { AuthContext, AuthProvider }
+export const useAuthContext = () => {
+  return useContext(AuthContext)
+}

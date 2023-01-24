@@ -1,22 +1,21 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useContext } from 'react'
 import { SafeAreaView, TouchableOpacity } from 'react-native'
-import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
-import { AuthContext } from '../../context/auth'
+import { AntDesign } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
+import { useCartContext } from '../../context/cart'
 
-const Header = () => {
-  const { state, setState } = useContext(AuthContext)
-
-  const handleSignOut = async () => {
-    setState({ token: null })
-    await AsyncStorage.removeItem('@auth')
-    await AsyncStorage.removeItem('cart')
+const Header = ({ route, icon }) => {
+  const { storeCartToLocal } = useCartContext()
+  const navigation = useNavigation()
+  const handleRoute = () => {
+    storeCartToLocal()
+    navigation.navigate(route)
   }
 
   return (
     <SafeAreaView>
       <TouchableOpacity>
-        <FontAwesome5Icon name='sign-out-alt' color='#ff9900' onPress={handleSignOut} />
+        {/* <FontAwesome5Icon name='sign-out-alt' color='#ff9900' /> */}
+        <AntDesign name={icon} size={20} color='purple' onPress={handleRoute} />
       </TouchableOpacity>
     </SafeAreaView>
   )

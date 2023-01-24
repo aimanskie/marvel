@@ -8,7 +8,7 @@ const SubmitBtn = ({ title, handleSubmit, google = false }) => {
     console.log('google')
   }
   return (
-    <View className='relative py-2'>
+    <View className='relative p-2'>
       <TouchableOpacity
         className={
           google

@@ -1,48 +1,75 @@
-import { useState, useEffect, useContext } from 'react'
-import { Text, View, SafeAreaView } from 'react-native'
+import { useEffect } from 'react'
+import { Text, View, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native'
+import axios from 'axios'
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 import FooterTabs from '../components/nav/FooterTabs'
-import { AuthContext } from '../context/auth'
-// import axios from 'axios'
+import { useAuthContext } from '../context/auth'
+import { FontAwesome } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons'
 
 const Profile = ({ navigation }) => {
-  const { state, setState } = useContext(AuthContext)
-  //   useEffect(() => {
-  // if(state) {
+  const { getUserDB, state, setState, signOut } = useAuthContext()
 
-  // }
-  //   },[])
-  const { userName, name, phone, email, eWalletBalance } = state
+  useEffect(() => {
+    getUserDB()
+  }, [])
 
-  const handleSignOut = async () => {
-    setState({ token: null })
-    await AsyncStorage.removeItem('@auth')
+  const { userName, name, phone, email, eWalletBalance, address } = state
+
+  const handleSignOut = () => {
+    signOut()
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Text title center>
-        Profile Page
-      </Text>
-      <View>
-        <Text style={{ color: 'blue' }} center onPress={() => navigation.navigate('EditProfile')}>
-          Go to Edit Profile
-        </Text>
+    <ScrollView style={{ flex: 1 }}>
+      <TouchableOpacity className='bg-white flex-row px-2 py-3 my-1' onPress={() => navigation.navigate('EditProfile')}>
+        <FontAwesome name='user' size={16} color='purple' />
+        <Text className='pl-2'>Personal Information</Text>
+        <AntDesign name='right' size={16} color='purple' style={{ marginLeft: 'auto' }} />
+      </TouchableOpacity>
+      <View className='my-0.5 bg-white space-y-2 px-4 py-2'>
+        <Text className='text-gray-500'>Username : </Text>
+        <Text>{userName}</Text>
       </View>
-      {state && (
-        <>
-          <Text>userName : {userName}</Text>
-          <Text>name : {name}</Text>
-          <Text>phone : {phone}</Text>
-          <Text>email : {email}</Text>
-          <Text>eWallet : RM {eWalletBalance}</Text>
-        </>
-      )}
-      <FontAwesome5Icon name='sign-out-alt' color='#ff9900' onPress={handleSignOut} />
+      <View className='my-0.5 bg-white space-y-2 px-4 py-2'>
+        <Text className='text-gray-500'>Email : </Text>
+        <Text>{email}</Text>
+      </View>
+      <View className='my-0.5 bg-white space-y-2 px-4 py-2'>
+        <Text className='text-gray-500'>Name : </Text>
+        <Text>{name}</Text>
+      </View>
+      <View className='my-0.5 bg-white space-y-2 px-4 py-2'>
+        <Text className='text-gray-500'>Phone : </Text>
+        <Text>{phone}</Text>
+      </View>
+      <View className='my-0.5 bg-white space-y-2 px-4 py-2'>
+        <Text className='text-gray-500'>Address : </Text>
+        <Text>{address}</Text>
+      </View>
+      <TouchableOpacity className='bg-white flex-row px-2 py-3 my-1' onPress={() => navigation.navigate('EditProfile')}>
+        <AntDesign name='wallet' size={16} color='purple' />
+        <Text className='pl-2'>E-Wallet</Text>
+        <AntDesign name='right' size={16} color='purple' style={{ marginLeft: 'auto' }} />
+      </TouchableOpacity>
+      <View className=' bg-white  px-4 py-2'>
+        <Text className='font-bold'>RM {eWalletBalance}</Text>
+      </View>
+      <TouchableOpacity className='bg-white flex-row px-2 py-3 my-1'>
+        <MaterialIcons name='language' size={16} color='purple' />
+        <Text className='pl-2'>Language</Text>
+        <AntDesign name='right' size={16} color='purple' style={{ marginLeft: 'auto' }} />
+      </TouchableOpacity>
+      <TouchableOpacity className='bg-white flex-row px-2 py-3 my-1' onPress={handleSignOut}>
+        <MaterialIcons name='logout' size={16} color='purple' />
+        <Text className='pl-2'>Logout</Text>
+        <AntDesign name='right' size={16} color='purple' style={{ marginLeft: 'auto' }} />
+      </TouchableOpacity>
       <View style={{ flex: 1, justifyContent: 'flex-end' }}>
         <FooterTabs />
       </View>
-    </SafeAreaView>
+    </ScrollView>
   )
 }
 

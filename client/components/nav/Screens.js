@@ -4,7 +4,7 @@ import SignUp from '../../screens/SignUp'
 import SignIn from '../../screens/SignIn'
 import ResetPassword from '../../screens/ResetPassword'
 import Home from '../../screens/Home'
-import { AuthContext } from '../../context/auth'
+import { AuthContext, useAuthContext } from '../../context/auth'
 import Header from './Header'
 import Profile from '../../screens/Profile'
 import Cart from '../../screens/Cart'
@@ -14,28 +14,56 @@ import Checkout from '../../screens/Checkout'
 import PlaceOrder from '../../screens/PlaceOrder'
 import Search from '../../screens/Search'
 import ShopDetails from '../../screens/ShopDetails.js'
+import Review from '../../screens/Review'
+import ProductDetail from '../../screens/ProductDetail'
+import AllReviews from '../../screens/AllReviews'
+import AllProducts from '../../screens/AllProducts'
 const Stack = createNativeStackNavigator()
 
 const Screens = () => {
-  const { state } = useContext(AuthContext)
+  const { state } = useAuthContext()
   const authenticated = state?.token !== null
 
   return (
-    <Stack.Navigator initialRouteName='Search' screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName='Home'>
       {authenticated ? (
         <>
-          <Stack.Screen name='Home' component={Home} options={{ title: 'Home', headerRight: () => <Header /> }} />
+          <Stack.Screen name='Home' component={Home} />
           <Stack.Screen name='Profile' component={Profile} options={{ headerBackTitle: 'Back' }} />
-          <Stack.Screen name='Cart' component={Cart} options={{ headerBackTitle: 'Back' }} />
-          <Stack.Screen name='Order' component={Orders} options={{ headerBackTitle: 'Back' }} />
+          <Stack.Screen name='Cart' component={Cart} options={{ headerShown: true, headerBackTitle: 'Back' }} />
+          <Stack.Screen name='Orders' component={Orders} options={{ headerBackTitle: 'Back' }} />
           <Stack.Screen name='EditProfile' component={EditProfile} options={{ headerBackTitle: 'Back' }} />
-          <Stack.Screen name='Checkout' component={Checkout} options={{ headerBackTitle: 'Back' }} />
-          <Stack.Screen name='PlaceOrder' component={PlaceOrder} options={{ headerBackTitle: 'Back' }} />
+          <Stack.Screen name='Checkout' component={Checkout} options={{ headerShown: true, headerBackTitle: 'Back' }} />
+          <Stack.Screen
+            name='PlaceOrder'
+            component={PlaceOrder}
+            options={{
+              headerShown: true,
+              headerBackTitle: '',
+              
+            }}
+          />
           <Stack.Screen name='Search' component={Search} />
+          <Stack.Screen name='Review' component={Review} options={{ headerShown: true, headerBackTitle: 'Back' }} />
+          <Stack.Screen
+            name='ProductDetail'
+            component={ProductDetail}
+            options={{ headerShown: true, headerBackTitle: 'Back' }}
+          />
+          <Stack.Screen
+            name='AllReviews'
+            component={AllReviews}
+            options={{ headerShown: true, headerBackTitle: 'Back' }}
+          />
+          <Stack.Screen
+            name='AllProducts'
+            component={AllProducts}
+            options={{ headerShown: true, headerBackTitle: 'Back' }}
+          />
           <Stack.Screen
             name='ShopDetails'
             component={ShopDetails}
-            options={{ headerShown: true, headerBackTitle: 'Back' }}
+            options={{ headerShown: true, headerRight: () => <Header route='Cart' icon='shoppingcart' /> }}
           />
         </>
       ) : (

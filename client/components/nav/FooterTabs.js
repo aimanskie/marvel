@@ -7,16 +7,14 @@ const Tab = ({ name, text, handlePress, screenName, route }) => {
   const active = screenName === route && 'blue'
   return (
     <TouchableOpacity>
-      <>
-        <FontAwesome5
-          name={name}
-          size={25}
-          style={{ alignSelf: 'center', marginBottom: 3 }}
-          onPress={handlePress}
-          color={active}
-        />
-        <Text>{text}</Text>
-      </>
+      <FontAwesome5
+        name={name}
+        size={25}
+        style={{ alignSelf: 'center', marginBottom: 3 }}
+        onPress={handlePress}
+        color={active}
+      />
+      <Text>{text}</Text>
     </TouchableOpacity>
   )
 }
@@ -40,8 +38,8 @@ const FooterTabs = () => {
         <Tab
           name='receipt'
           text='Order'
-          handlePress={() => navigation.navigate('Order')}
-          screenName='Order'
+          handlePress={() => navigation.navigate('Orders')}
+          screenName='Orders'
           route={route}
         />
         <Tab
