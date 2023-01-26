@@ -9,7 +9,6 @@ export const CartProvider = ({ children }) => {
   const { alert } = Alert
 
   const handleAddtoCart = (item) => {
-    // check number that gathers common id
     if (!item.number) {
       processCart([...cartDisplay, { ...item, number: 1 }])
     } else {

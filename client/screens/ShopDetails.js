@@ -5,7 +5,6 @@ import { MaterialIcons } from '@expo/vector-icons'
 import { ProductContext } from '../context/product'
 import { useCartContext } from '../context/cart'
 import ProductCart from '../components/ProductCard'
-import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 
 const ShopDetails = ({
   route: {
@@ -36,8 +35,8 @@ const ShopDetails = ({
     navigation.navigate('AllReviews')
   }
 
-  const handleProductDetail = (item) => {
-    navigation.navigate('ProductDetail', { item })
+  const handleProductDetail = (product) => {
+    navigation.navigate('ProductDetail', product)
   }
 
   const handleRoute = () => {
@@ -109,17 +108,9 @@ const ShopDetails = ({
           }}
           keyExtractor={(item) => item.id}
         />
-        <View className='flex-row self-center gap-2 mt-1'>
-          <TouchableOpacity onPress={showAllReview} className='border border-gray-200 w-30 px-10 py-3'>
-            <Text>Show all</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Review')}
-            className='border border-gray-200 bg-blue-900 px-10 py-3  '
-          >
-            <Text className='text-gray-50'>Leave a review</Text>
-          </TouchableOpacity>
-        </View>
+        <Text onPress={showAllReview} className='bg-blue-900 mx-4 text-center text-white py-4 my-2'>
+          All Reviews
+        </Text>
       </ScrollView>
     </View>
   )

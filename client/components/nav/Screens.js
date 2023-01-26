@@ -28,7 +28,7 @@ const Screens = () => {
     <Stack.Navigator initialRouteName='Home'>
       {authenticated ? (
         <>
-          <Stack.Screen name='Home' component={Home} />
+          <Stack.Screen name='Home' component={Home} options={{ headerShown: true }} />
           <Stack.Screen name='Profile' component={Profile} options={{ headerBackTitle: 'Back' }} />
           <Stack.Screen name='Cart' component={Cart} options={{ headerShown: true, headerBackTitle: 'Back' }} />
           <Stack.Screen name='Orders' component={Orders} options={{ headerBackTitle: 'Back' }} />
@@ -40,11 +40,9 @@ const Screens = () => {
             options={{
               headerShown: true,
               headerBackTitle: '',
-              
             }}
           />
           <Stack.Screen name='Search' component={Search} />
-          <Stack.Screen name='Review' component={Review} options={{ headerShown: true, headerBackTitle: 'Back' }} />
           <Stack.Screen
             name='ProductDetail'
             component={ProductDetail}
