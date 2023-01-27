@@ -1,12 +1,10 @@
 import { Text, View } from 'react-native'
-import { AntDesign } from '@expo/vector-icons'
 import { useCartContext } from '../context/cart'
 
 const ProductDetail = (props) => {
   const { title, description, price, discountedPrice } = props.route.params
 
   const { handleAddtoCart } = useCartContext()
-  // console.log(price)
   const product = { title, description, price, discountedPrice }
   return (
     <>

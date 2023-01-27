@@ -7,11 +7,6 @@ import { useCartContext } from '../context/cart'
 import { TextInput } from 'react-native'
 import { useAuthContext } from '../context/auth'
 
-// import { AuthContext } from '../context/auth'
-// import { useContext } from 'react'
-// import useAddToCart from '../components/useAddToCart'
-// import ListCart from '../components/ListCart'
-
 const Checkout = ({ navigation }) => {
   const { getCart, cartDisplay, getTotalPrice } = useCartContext()
   const { state, setState, storeAuthToLocal } = useAuthContext()

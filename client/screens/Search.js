@@ -14,7 +14,6 @@ import { Entypo } from '@expo/vector-icons'
 const Search = ({ navigation }) => {
   const [shops, setShops] = useState([])
 
-  // first thing
   useEffect(() => {
     setShops(createArr)
   }, [])

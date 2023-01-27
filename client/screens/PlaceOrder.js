@@ -2,7 +2,6 @@ import { Text, TouchableOpacity, View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import { useEffect, useState } from 'react'
 import Divider from '../components/Divider'
-import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 import { useCartContext } from '../context/cart'
 import { useAuthContext } from '../context/auth'
 

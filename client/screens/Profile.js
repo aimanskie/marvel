@@ -1,7 +1,5 @@
 import { useEffect } from 'react'
 import { Text, View, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native'
-import axios from 'axios'
-import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 import FooterTabs from '../components/nav/FooterTabs'
 import { useAuthContext } from '../context/auth'
 import { FontAwesome } from '@expo/vector-icons'

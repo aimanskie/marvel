@@ -1,19 +1,9 @@
-import { useContext } from 'react'
 import { Image, SafeAreaView, Text, ScrollView } from 'react-native'
 import FooterTabs from '../components/nav/FooterTabs'
 import { View } from 'react-native'
-import { AuthContext, useAuthContext } from '../context/auth'
-import { TextInput } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 
 const Home = ({ navigation }) => {
-  const { cartState, setCartState } = useAuthContext()
-
-  const handlePress = (index) => {
-    console.log(index)
-    setCartState([...cartState, { title: children[index].title, price: children[index].price }])
-  }
-
   const handleSearch = () => {
     navigation.navigate('Search')
     console.log('press')
@@ -32,7 +22,6 @@ const Home = ({ navigation }) => {
           <AntDesign name='search1' size={20} color='grey' />
         </View>
       </View>
-      {/* cards */}
       <ScrollView className='px-1 pt-2 gap-2 '>
         <Image source={require('./img/1.jpg')} style={{ height: 90, width: '98%' }} />
         <Image source={require('./img/2.jpg')} style={{ height: 90, width: '98%' }} />

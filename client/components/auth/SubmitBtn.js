@@ -1,7 +1,4 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native'
-import { AntDesign } from '@expo/vector-icons'
-
-// import Svg, { Image } from 'react-native-svg'
 
 const SubmitBtn = ({ title, handleSubmit, google = false }) => {
   const handleGoogle = () => {

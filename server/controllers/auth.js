@@ -1,13 +1,13 @@
 import User from '../models/user'
 import { hashPassword, comparePassword } from '../helpers/auth'
 import jwt from 'jsonwebtoken'
-import expressJwt from 'express-jwt'
+// import expressJwt from 'express-jwt'
 require('dotenv').config()
 
-export const checkSignIn = expressJwt({
-  secret: process.env.JWT_SECRET,
-  algorithms: ['HS256'],
-})
+// export const checkSignIn = expressJwt({
+//   secret: process.env.JWT_SECRET,
+//   algorithms: ['HS256'],
+// })
 
 export const signup = async (req, res) => {
   console.log('HIT SIGNUP')
