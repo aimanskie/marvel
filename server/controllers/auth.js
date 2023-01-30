@@ -120,6 +120,6 @@ export const getUser = async (req, res) => {
     const data = await User.findById(req.query.id)
     return res.json(data)
   } catch (error) {
-    console.log(error)
+    res.status(400).json({ token: null })
   }
 }

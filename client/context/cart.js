@@ -9,13 +9,20 @@ export const CartProvider = ({ children }) => {
   const { alert } = Alert
 
   const handleAddtoCart = (item) => {
-    if (!item.number) {
-      processCart([...cartDisplay, { ...item, number: 1 }])
-    } else {
-      processCart([...cartDisplay, { ...item, number: item.number + 1 }])
+    if (cartDisplay) {
+      if (!item.number) {
+        processCart([...cartDisplay, { ...item, number: 1 }])
+      } else {
+        processCart([...cartDisplay, { ...item, number: item.number + 1 }])
+      }
+      return alert('Added to Cart')
     }
-    alert('Added to Cart')
-    return
+    if (!item.number) {
+      processCart([{ ...item, number: 1 }])
+    } else {
+      processCart([{ ...item, number: item.number + 1 }])
+    }
+    return alert('Added to Cart')
   }
 
   const increase = (id) => {

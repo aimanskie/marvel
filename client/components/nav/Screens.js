@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import SignUp from '../../screens/SignUp'
 import SignIn from '../../screens/SignIn'
@@ -20,6 +21,7 @@ const Stack = createNativeStackNavigator()
 
 const Screens = () => {
   const { state } = useAuthContext()
+
   const authenticated = state?.token !== null
 
   return (

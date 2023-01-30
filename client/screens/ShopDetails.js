@@ -44,6 +44,12 @@ const ShopDetails = ({
     navigation.navigate('Cart')
   }
 
+  // const handleCart = (oneItem) => {
+  //   setTimeout(() => {
+  //     handleAddtoCart(oneItem)
+  //   }, 500)
+  // }
+
   return (
     <View className='flex-1'>
       <ScrollView>

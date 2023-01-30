@@ -24,9 +24,15 @@ export const AuthProvider = ({ children }) => {
   }, [])
 
   const getUser = async () => {
-    let data = await AsyncStorage.getItem('@auth')
-    const user = JSON.parse(data)
-    setState(user)
+    const { data } = await axios('get-user')
+    console.log(data)
+    if (data) {
+      let data = await AsyncStorage.getItem('@auth')
+      const user = JSON.parse(data)
+      setState(user)
+    } else {
+      signOut()
+    }
   }
 
   const storeAuthToLocal = async (data) => {

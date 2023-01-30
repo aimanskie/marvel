@@ -9,9 +9,9 @@ const Orders = () => {
   const { getTotalPrice } = useCartContext()
   const { getUser, state } = useAuthContext()
 
-  useEffect(() => {
-    getUser()
-  }, [])
+  // useEffect(() => {
+  //   getUser()
+  // }, [])
 
   const data = [
     { order: Math.floor(Math.random() * 100000), date: new Date().toLocaleDateString(), orderPrice: 300 },

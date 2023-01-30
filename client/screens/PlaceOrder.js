@@ -12,7 +12,7 @@ const PlaceOrder = ({ navigation }) => {
 
   useEffect(() => {
     getCart()
-    getUser()
+    // getUser()
     orderNumber()
   }, [])
 
@@ -50,7 +50,7 @@ const PlaceOrder = ({ navigation }) => {
               <View className='flex-row pb-2' key={`order-${idx}`}>
                 <Text className='mr-2'>{number}x</Text>
                 <Text className='text-xs'>{title} </Text>
-                <Text className='ml-auto'>RM {price * number}</Text>
+                <Text className='ml-auto'>RM {price * number} </Text>
               </View>
             )
           })}
