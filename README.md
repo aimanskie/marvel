@@ -1,5 +1,7 @@
 # Marvel IOS App
 
+![](https://github.com/aimanskie/marvel/blob/main/marvel%20mobile.gif)
+
 ## This is a React Native app and was developed using the IOS Simulator with the Expo Framework. Node js as the server and Mongo database
 
 #
